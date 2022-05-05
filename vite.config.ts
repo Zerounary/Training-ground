@@ -18,6 +18,9 @@ export default defineConfig({
       '/@': resolve(__dirname, './src'),
     },
   },
+  build: {
+    outDir: "docs"
+  },
   plugins: [
     vue(),
     // https://github.com/jpkleemans/vite-svg-loader
