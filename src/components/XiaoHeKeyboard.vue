@@ -41,6 +41,13 @@
           <div class="text-right text-xl text-blue-500">{{ key.ve }}</div>
         </div>
       </div>
+      <div>
+        <div class="text-xl">单元训练</div>
+        <select v-model="volOpt" @change="volOptChange">
+          <option value="vs">声母</option>
+          <option value="ve">韵母</option>
+        </select>
+      </div>
     </div>
   </div>
 </template>
@@ -80,14 +87,19 @@ let veitems = all.map(e => {
   }
 });
 
+let vss: any[] = all.map(e => e.vs);
+
 for (const iterator of veitems) {
   ves = [...ves, ...iterator];
 }
 
+let volOpt = ref('vs');
+
 let getPraticeList = (num: number) => {
   let list: string | any[] = [];
+  let practiceList = volOpt.value == 'vs'? vss : ves;
   for (let i = 0; i < num; i++) {
-    list = [...list, ...ves];
+    list = [...list, ...practiceList];
   }
   // shuffle the list
   for (let i = list.length - 1; i > 0; i--) {
@@ -100,20 +112,17 @@ let getPraticeList = (num: number) => {
 let practiceList = ref(getPraticeList(3));
 let index = ref(0);
 
-let getKey = (by: 'vs' | 've', val: string) => {
+let getKey = (val: string) => {
+  let by = volOpt.value;
   let key = all.find(e => e[by].split(" ").includes(val)
   )?.key || '';
   return key;
 };
-
-console.log(getKey('ve', 'iang'));
-
-
 let getVal = () => {
   return practiceList.value[index.value];
 };
 
-let highlightKey = ref(getKey('ve', getVal()));
+let highlightKey = ref(getKey(getVal()));
 let inputValue = ref('');
 let input = ref();
 
@@ -125,7 +134,7 @@ let nextKey = () => {
     practiceList.value = getPraticeList(3);
   }
   let val = getVal();
-  highlightKey.value = getKey('ve', val);
+  highlightKey.value = getKey(val);
 };
 
 let keyup = (e: { key: string; }) => {
@@ -134,9 +143,19 @@ let keyup = (e: { key: string; }) => {
   }
 };
 
+let reset = () => {
+  index.value = 0;
+  practiceList.value = getPraticeList(3);
+  highlightKey.value = getKey(getVal())
+}
+
 onMounted(() => {
   input.value.focus();
 })
+
+let volOptChange = () => {
+  reset()
+}
 </script>
 
 <style scoped></style>
