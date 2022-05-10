@@ -74,7 +74,13 @@ let rows = [
   rowThree.split(',').map(e => wrap(e)),
 ];
 
-let all = [rowOne, rowTwo, rowThree]
+interface KeyElement {
+  key: string;
+  vs: string;
+  ve: string;
+}
+
+let all: Array<KeyElement> = [rowOne, rowTwo, rowThree]
   .join(',')
   .split(',')
   .map(e => wrap(e));
@@ -114,7 +120,7 @@ let index = ref(0);
 
 let getKey = (val: string) => {
   let by = volOpt.value;
-  let key = all.find(e => e[by].split(" ").includes(val)
+  let key = all.find((e: KeyElement) => e[by].split(" ").includes(val)
   )?.key || '';
   return key;
 };
