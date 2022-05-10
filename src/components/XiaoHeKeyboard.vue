@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-30px mt-300px">
+  <div class="space-y-30px mt-100px">
     <span class="ml-50px ml-100px"></span>
     <h1 class="text-5xl w-300px mx-auto">小鹤音形按键</h1>
     <div class="mx-auto w-1170px">
