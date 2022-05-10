@@ -147,6 +147,7 @@ let reset = () => {
   index.value = 0;
   practiceList.value = getPraticeList(3);
   highlightKey.value = getKey(getVal())
+  input.value.focus();
 }
 
 onMounted(() => {
