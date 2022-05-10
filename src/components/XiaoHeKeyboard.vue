@@ -15,7 +15,7 @@
         >
           <img
             class="absolute top-0 right-0 -z-1"
-            :src="`/src/assets/xh/${key.key}.png`"
+            :src="`xh/${key.key}.png`"
           />
           <div class="text-3xl ">{{ key.key.toUpperCase() }}</div>
           <div class="text-xl text-red-500 mt-20px">{{ key.vs }}</div>
