@@ -16,6 +16,7 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": true,
     "declaration": true,
     "paths": {
       "@/*": ["src/*"],
