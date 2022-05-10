@@ -1,11 +1,27 @@
 <template>
-  <h1>小鹤</h1>
-  <div v-for="(row, index) in rows" :key="index" class="flex relative" :class="`ml-${index * 50}px`">
-    <div v-for="key in row" :key="key.key" class="border h-100px w-100px relative">
-      <img class="absolute top-0 right-0 -z-1 " :src="`/src/assets/xh/${key.key}.png`" />
-      <div class="text-3xl">{{ key.key.toUpperCase() }}</div>
-      <div class="text-xl">{{ key.vs }}</div>
-      <div>{{ key.ve }}</div>
+  <div class="space-y-30px mt-300px">
+    <h1 class="text-5xl w-300px mx-auto">小鹤音形按键</h1>
+    <div class="w-900px mx-auto">
+      <div
+        v-for="(row, index) in rows"
+        :key="index"
+        class="flex relative"
+        :class="`ml-${index * 50}px`"
+      >
+        <div
+          v-for="key in row"
+          :key="key.key"
+          class="border h-100px w-100px relative"
+        >
+          <img
+            class="absolute top-0 right-0 -z-1"
+            :src="`/src/assets/xh/${key.key}.png`"
+          />
+          <div class="text-3xl">{{ key.key.toUpperCase() }}</div>
+          <div class="text-xl">{{ key.vs }}</div>
+          <div>{{ key.ve }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +45,6 @@ let rows = [
   rowTwo.split(',').map(e => wrap(e)),
   rowThree.split(',').map(e => wrap(e)),
 ];
-
 </script>
 
 <style scoped></style>
