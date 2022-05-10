@@ -1,11 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
-const routes = [
-  {
-    path: '/',
-    component: () => import('/@/pages/Index.vue'),
-  },
-];
+import routes from "~pages"
 
 export const Router = createRouter({
   scrollBehavior: () => ({ left: 0, top: 0 }),

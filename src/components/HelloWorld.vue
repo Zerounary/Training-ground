@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { useCounterStore } from '/@/stores/counter';
+import { useCounterStore } from '@/stores/counter';
 import { storeToRefs } from 'pinia';
 
 export default defineComponent({
