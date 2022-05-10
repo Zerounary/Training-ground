@@ -20,7 +20,7 @@
           />
           <div class="text-3xl ">{{ key.key.toUpperCase() }}</div>
           <div class="text-xl text-red-500 mt-20px">{{ key.vs }}</div>
-          <div class="text-right text-blue-500">{{ key.ve }}</div>
+          <div class="text-right text-xl text-blue-500">{{ key.ve }}</div>
         </div>
       </div>
     </div>
