@@ -9,7 +9,7 @@
     "test-one": "vitest run",
     "coverage": "vitest --coverage",
     "serve": "vite preview",
-    "push": "git add . && git commit -am \"deploy\" && git push",
+    "push": "git add . && git commit -am \"deploy\"",
     "deploy": "npm-run-all test-one build push"
   },
   "dependencies": {
