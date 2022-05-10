@@ -71,7 +71,6 @@ let all = [rowOne, rowTwo, rowThree]
   .join(',')
   .split(',')
   .map(e => wrap(e));
-let vss = all.map(e => e.vs);
 let ves: any[] = [];
 let veitems = all.map(e => {
   if (e.ve.includes(' ')) {
@@ -129,7 +128,7 @@ let nextKey = () => {
   highlightKey.value = getKey('ve', val);
 };
 
-let keyup = e => {
+let keyup = (e: { key: string; }) => {
   if (e.key == highlightKey.value) {
     nextKey();
   }
