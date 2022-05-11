@@ -1,4 +1,4 @@
-import { keyBoardData, ves, vss } from './../src/util/XiaoHeKeys';
+import { keyBoardData, ves, vss, allKeys, getRandomKeys } from './../src/util/XiaoHeKeys';
 import { expect, beforeEach, it, describe } from 'vitest';
 // import { setActivePinia, createPinia } from 'pinia';
 import { useCounterStore } from '../src/stores/counter';
@@ -49,5 +49,10 @@ describe('小鹤音行基础数据', () => {
   it('韵母数据正确', () => {
     expect(ves.sort()).toEqual(veData.sort())
   });
+  it('随机按键列表', () => {
+    expect(getRandomKeys(1).length).toEqual(allKeys.length);
+    expect(getRandomKeys(2).length).toEqual(allKeys.length * 2);
+    expect(getRandomKeys(3).length).toEqual(allKeys.length * 3);
+  })
 
 });
