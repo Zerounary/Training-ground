@@ -55,9 +55,6 @@
 <script setup lang="ts">
 import { ref, onMounted, Ref, computed } from 'vue';
 import {
-  vss,
-  ves,
-  allKeys,
   keyBoardData,
   getRandomKeys,
   KeyElement,
@@ -70,13 +67,6 @@ let autoStart = ref(true);
 let practiceList = ref(getRandomKeys(3));
 let index = ref(0);
 let currentKey: Ref<KeyElement | undefined> = ref();
-
-// 获取当前键盘显示的键
-let getKey = (val: string) => {
-  return currentKey.value?.key;
-};
-
-
 let inputValue = ref('');
 let input = ref();
 
