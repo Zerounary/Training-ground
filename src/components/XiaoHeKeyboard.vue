@@ -11,6 +11,8 @@
           ref="input"
           class="w-300px h-50px m-auto border text-center"
           v-model="inputValue"
+          @focus="onFocus"
+          @blur="onBlur"
           @keyup="keyup"
           :placeholder="''"
         />
@@ -38,15 +40,19 @@
           <img class="absolute top-0 right-0 z-1" :src="`xh/${key.key}.png`" />
           <div class="text-3xl">{{ key.key.toUpperCase() }}</div>
           <div class="text-xl text-red-500 mt-20px">{{ key.vs }}</div>
-          <div class="text-right text-xl text-blue-500">{{ key.ve.join(' ') }}</div>
+          <div class="text-right text-xl text-blue-500">
+            {{ key.ve.join(' ') }}
+          </div>
         </div>
       </div>
-      <div>
-        <div class="text-xl">单元训练</div>
-        <select v-model="volOpt" @change="volOptChange">
-          <option value="vs">声母</option>
-          <option value="ve">韵母</option>
-        </select>
+      <div class="text-xl">单元训练</div>
+      <div class="border p-3 rounded space-x-3">
+        <div>
+          <select v-model="volOpt" @change="volOptChange">
+            <option value="vs">声母</option>
+            <option value="ve">韵母</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -54,11 +60,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, Ref, computed } from 'vue';
-import {
-  keyBoardData,
-  getRandomKeys,
-  KeyElement,
-} from '@/util/XiaoHeKeys';
+import { keyBoardData, getRandomKeys, KeyElement } from '@/util/XiaoHeKeys';
 
 // 所有字段的数据对象
 let volOpt = ref('vs');
@@ -91,12 +93,19 @@ let reset = () => {
   practiceList.value = getRandomKeys(3);
   currentKey.value = undefined;
   input.value.focus();
-  start();
 };
 
 onMounted(() => {
-  input.value.focus();
+  // input.value.focus();
 });
+
+let onFocus = () => {
+  start()
+}
+
+let onBlur = () => {
+  currentKey.value = undefined;
+}
 
 let volOptChange = () => {
   reset();
@@ -105,7 +114,7 @@ let volOptChange = () => {
 // 获取当前的值
 let currentKeyDisplay = computed(() => {
   if (currentKey.value) {
-    let display =  currentKey.value[volOpt.value];
+    let display = currentKey.value[volOpt.value];
     // if display is array
     if (Array.isArray(display)) {
       display = display.join(' ');
@@ -115,12 +124,10 @@ let currentKeyDisplay = computed(() => {
 });
 
 function start() {
-  if(autoStart.value){
-    nextKey()
+  if (autoStart.value) {
+    nextKey();
   }
 }
-
-start()
 </script>
 
 <style scoped></style>
