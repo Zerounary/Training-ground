@@ -55,6 +55,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
+// 数据内容
 let rowOne =
   'q-q-iu,w-w-ei,e-e-e,r-r-uan,t-t-ue,y-y-un,u-sh-u,i-ch-i,o-o-uo:o,p-p-ie';
 let rowTwo =
@@ -68,6 +69,7 @@ let wrap = (e: string) => {
     ve: ve.split(':').join(' '),
   };
 };
+// 键盘显示的数据结构
 let rows = [
   rowOne.split(',').map(e => wrap(e)),
   rowTwo.split(',').map(e => wrap(e)),
@@ -80,6 +82,7 @@ interface KeyElement {
   ve: string;
 }
 
+// 所有字段的数据对象
 let all: Array<KeyElement> = [rowOne, rowTwo, rowThree]
   .join(',')
   .split(',')
@@ -93,6 +96,7 @@ let veitems = all.map(e => {
   }
 });
 
+// 所有声母
 let vss: any[] = all.map(e => e.vs);
 
 for (const iterator of veitems) {
@@ -101,6 +105,7 @@ for (const iterator of veitems) {
 
 let volOpt = ref('vs');
 
+// 获取训练列表
 let getPraticeList = (num: number) => {
   let list: string | any[] = [];
   let practiceList = volOpt.value == 'vs'? vss : ves;
@@ -118,12 +123,14 @@ let getPraticeList = (num: number) => {
 let practiceList = ref(getPraticeList(3));
 let index = ref(0);
 
+// 获取当前键盘显示的键
 let getKey = (val: string) => {
   let by = volOpt.value;
   let key = all.find((e: KeyElement) => e[by].split(" ").includes(val)
   )?.key || '';
   return key;
 };
+// 获取当前的值
 let getVal = () => {
   return practiceList.value[index.value];
 };
