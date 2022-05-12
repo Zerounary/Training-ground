@@ -46,16 +46,11 @@ for (let vs of vss) {
 export let allPinYins = pinyins;
 
 export function getRandomKeys(repeatNum: number): Array<KeyElement> {
-  let result: Array<KeyElement> = [];
-  for (let i = 0; i < repeatNum; i++) {
-    result = [...result, ...allKeys];
-  }
-  // shuffle result
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [result[i], result[j]] = [result[j], result[i]];
-  }
-  return result;
+  return getRandomElements(allKeys, repeatNum);
+}
+
+function getRandomElements(arr: Array<any>, repeatNum: number) {
+  return shuffle(repeat(arr, repeatNum));
 }
 
 interface WordElement {
@@ -100,4 +95,23 @@ function toKeyElement(keyStr: string): KeyElement {
 // 展开数组
 function flatten(arr: Array<any>) {
   return arr.reduce((acc, cur) => acc.concat(cur), []);
+}
+
+// shuffle a array
+function shuffle(arr: Array<any>){
+   for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// repeat a array
+export function repeat(arr: Array<any>, repeatNum: number ){
+  let result : Array<any> = [];
+  for (let i = 0; i < repeatNum; i++) {
+    result = [...result, ...arr]
+    // result.concat(arr);
+  }
+  return result;
 }

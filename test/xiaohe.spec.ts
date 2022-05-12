@@ -1,4 +1,4 @@
-import { keyBoardData, ves, vss, allKeys, getRandomKeys, allWords } from './../src/util/XiaoHeKeys';
+import { keyBoardData, ves, vss, allKeys, getRandomKeys, allWords, repeat } from './../src/util/XiaoHeKeys';
 import { expect, beforeEach, it, describe } from 'vitest';
 // import { setActivePinia, createPinia } from 'pinia';
 import { useCounterStore } from '../src/stores/counter';
@@ -61,6 +61,13 @@ describe('小鹤音行基础数据', () => {
       keys: ['w', 'o']
     }
     expect(allWords[0]).toEqual(word);
+  })
+
+  it('测试 repeat 函数', () => {
+    let arr = [ 1, 2, 3]
+    expect(repeat(arr, 1)).toEqual([1,2,3])
+    expect(repeat(arr, 2)).toEqual([1,2,3,1,2,3])
+    expect(repeat(arr, 3)).toEqual([1,2,3,1,2,3,1,2,3])
   })
 
 });
