@@ -11,7 +11,6 @@ export interface KeyElement {
 
 export let allKeys = data.split(',').map(toKeyElement);
 
-
 export let keyBoardData = [
   allKeys.slice(0, 10),
   allKeys.slice(10, 19),
@@ -45,10 +44,39 @@ for (let vs of vss) {
 
 export let allPinYins = pinyins;
 
-export function getRandomKeys(repeatNum: number): Array<KeyElement> {
-  return getRandomElements(allKeys, repeatNum);
+export interface PracticeElement {
+  display: string;
+  keys: string;
 }
 
+export function getRandomVss(repeatNum: number): PracticeElement[] {
+  let result: PracticeElement[] = [];
+
+  result = getRandomElements(allKeys, repeatNum).map(e => ({
+    display: e.vs,
+    keys: e.key,
+  }));
+
+  return result;
+}
+
+export function getRandomVes(repeatNum: number): Array<PracticeElement> {
+  let result: PracticeElement[] = [];
+  result = getRandomElements(allKeys, repeatNum).map(e => ({
+    display: e.ve,
+    keys: e.key,
+  }));
+  return result;
+}
+
+export function getRandomWords(repeatNum: number): Array<PracticeElement> {
+  let result: PracticeElement[] = [];
+  result = getRandomElements(allWords, repeatNum).map(e => ({
+    display: e.word,
+    keys: e.keys.join(''),
+  }));
+  return result;
+}
 function getRandomElements(arr: Array<any>, repeatNum: number) {
   return shuffle(repeat(arr, repeatNum));
 }
@@ -63,18 +91,13 @@ interface WordElement {
  * @param wordStr
  * @returns
  */
-let toWordElement = (wordStr: string): WordElement => {
-  let [word, pingYin] = wordStr.split('-');
+export let toWordElement = (wordStr: string): WordElement => {
+  let [word, pingYinKeyStr] : string[] = wordStr.split('-');
   return {
     word,
-    keys: splitPingYin(pingYin),
+    keys: pingYinKeyStr.split('')
   };
-  // 将完整的拼音拆分成声母和韵母
-  function splitPingYin(pinYin: string): Array<string> {
-    let pinYinObj = pinyins.find(p => p.full == pinYin);
-    return [pinYinObj?.vs || '', pinYinObj?.ve || ''];
-  }
-}
+};
 
 export let allWords = words.split(',').map(toWordElement);
 
@@ -98,8 +121,8 @@ function flatten(arr: Array<any>) {
 }
 
 // shuffle a array
-function shuffle(arr: Array<any>){
-   for (let i = arr.length - 1; i > 0; i--) {
+function shuffle(arr: Array<any>) {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
@@ -107,10 +130,10 @@ function shuffle(arr: Array<any>){
 }
 
 // repeat a array
-export function repeat(arr: Array<any>, repeatNum: number ){
-  let result : Array<any> = [];
+export function repeat(arr: Array<any>, repeatNum: number) {
+  let result: Array<any> = [];
   for (let i = 0; i < repeatNum; i++) {
-    result = [...result, ...arr]
+    result = [...result, ...arr];
     // result.concat(arr);
   }
   return result;

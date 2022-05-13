@@ -29,13 +29,7 @@
           v-for="key in row"
           :key="key.key"
           class="border h-120px w-120px relative p-10px"
-          :class="`${
-            currentKey == undefined
-              ? ''
-              : currentKey.key == key.key
-              ? 'bg-yellow-300'
-              : ' filter grayscale'
-          }`"
+          :class="highlightClass(key.key)"
         >
           <img class="absolute top-0 right-0 z-1" :src="`xh/${key.key}.png`" />
           <div class="text-3xl">{{ key.key.toUpperCase() }}</div>
@@ -48,9 +42,10 @@
       <div class="text-xl">单元训练</div>
       <div class="border p-3 rounded space-x-3">
         <div>
-          <select v-model="volOpt" @change="volOptChange">
+          <select v-model="mode" @change="volOptChange">
             <option value="vs">声母</option>
             <option value="ve">韵母</option>
+            <option value="word">汉字</option>
           </select>
         </div>
       </div>
@@ -60,15 +55,40 @@
 
 <script setup lang="ts">
 import { ref, onMounted, Ref, computed } from 'vue';
-import { keyBoardData, getRandomKeys, KeyElement } from '@/util/XiaoHeKeys';
+import {
+  keyBoardData,
+  getRandomVss,
+  getRandomVes,
+  getRandomWords,
+  PracticeElement,
+} from '@/util/XiaoHeKeys';
 
 // 所有字段的数据对象
-let volOpt = ref('vs');
+let mode : Ref<string> = ref('word');
 let autoStart = ref(true);
-// 获取训练列表
-let practiceList = ref(getRandomKeys(3));
+
+let getPracticeList = function (num: number) {
+  let keys: PracticeElement[] = [];
+  switch (mode.value) {
+    case 'vs':
+      keys = getRandomVss(num);
+      break;
+    case 've':
+      keys = getRandomVes(num);
+      break;
+    case 'word':
+      keys = getRandomWords(num);
+      break;
+    default:
+      return (keys = []);
+  }
+  return keys;
+};
+
+// 获取训练列表kk
+let practiceList: Ref<PracticeElement[]> = ref(getPracticeList(3));
 let index = ref(0);
-let currentKey: Ref<KeyElement | undefined> = ref();
+let currentKey: Ref<PracticeElement | undefined> = ref();
 let inputValue = ref('');
 let input = ref();
 
@@ -77,20 +97,20 @@ let nextKey = () => {
   index.value++;
   if (index.value == practiceList.value.length) {
     index.value = 0;
-    practiceList.value = getRandomKeys(3);
+    practiceList.value = getPracticeList(3);
   }
   currentKey.value = practiceList.value[index.value];
 };
 
 let keyup = (e: { key: string }) => {
-  if (e.key == currentKey.value?.key) {
+  if (inputValue.value == currentKey.value?.keys) {
     nextKey();
   }
 };
 
 let reset = () => {
   index.value = 0;
-  practiceList.value = getRandomKeys(3);
+  practiceList.value = getPracticeList(3);
   currentKey.value = undefined;
   input.value.focus();
 };
@@ -100,27 +120,32 @@ onMounted(() => {
 });
 
 let onFocus = () => {
-  start()
-}
+  start();
+};
 
 let onBlur = () => {
-  currentKey.value = undefined;
-}
+  // currentKey.value = undefined;
+};
 
 let volOptChange = () => {
   reset();
 };
 
+let highlightClass = function (key: string) {
+  if (currentKey.value == undefined) {
+    return '';
+  }
+  let checkKey = currentKey.value?.keys[inputValue.value.length]
+  if( checkKey == key) {
+    return 'bg-yellow-300';
+  } else {
+    return 'filter grayscale';
+  }
+};
+
 // 获取当前的值
 let currentKeyDisplay = computed(() => {
-  if (currentKey.value) {
-    let display = currentKey.value[volOpt.value];
-    // if display is array
-    if (Array.isArray(display)) {
-      display = display.join(' ');
-    }
-    return display;
-  }
+  return currentKey.value?.display;
 });
 
 function start() {
