@@ -17,24 +17,51 @@
           :placeholder="''"
         />
       </div>
-      <div class="w-500px h-100px flex items-center justify-center bg-gray-50 text-center text-6xl text-gray-400 m-auto" @click="seeIt" >
-        <span :class="`${hiddenMean ? 'invisible' : 'visible'}`">{{ currentKeyMean }}</span>
+      <div
+        class="w-500px h-100px flex items-center justify-center bg-gray-50 text-center text-6xl text-gray-400 m-auto"
+        @click="seeIt"
+      >
+        <span :class="`${hiddenMean ? 'invisible' : 'visible'}`">{{
+          currentKeyMean
+        }}</span>
       </div>
       <div class="text-xl">单元训练</div>
-      <div class=" grid grid-cols-3 gap-3 border p-3 rounded space-x-3">
+      <div class="grid grid-cols-3 gap-3 border p-3 rounded space-x-3">
         <div>
           <select v-model="mode" @change="volOptChange">
             <option value="word">单词</option>
           </select>
         </div>
         <div>
-          <label for="hiddenMean">隐藏含义：<input id="hiddenMean" type="checkbox" v-model="hiddenMean" /></label>
+          <label for="hiddenMean"
+            >隐藏含义：<input
+              id="hiddenMean"
+              type="checkbox"
+              v-model="hiddenMean"
+          /></label>
         </div>
         <div>
-          <label for="hiddenMean">训练次数：<input v-model="practiceTime" @change="onPracticeTimeChange" /></label>
+          <label for="hiddenMean"
+            >训练次数：<input
+              v-model="practiceTime"
+              @change="onPracticeTimeChange"
+          /></label>
         </div>
-        <div class=" col-span-3">
-          <button class="bg-blue-500 text-white h-50px w-full rounded" @click="start">开始</button>
+        <div class="col-span-3">
+          <button
+            class="bg-blue-500 text-white h-50px w-full rounded"
+            @click="start"
+          >
+            开始
+          </button>
+        </div>
+        <div>
+          当前单词：
+          <select v-model="currentWordIndex" @change="wordChange">
+            <template v-for="(word,index) in practiceList" :key="word.dispaly">
+              <option :value="index" >{{word.display}}</option>
+            </template>
+          </select>
         </div>
       </div>
     </div>
@@ -47,6 +74,7 @@ import { getRandomWords, PracticeElement } from '@/util/EnglishWords';
 
 // 所有字段的数据对象
 let mode: Ref<string> = ref('word');
+let currentWordIndex: Ref<Number> = ref(0);
 let autoStart = ref(true);
 let hiddenMean = ref(true);
 let practiceTime = ref(1);
@@ -64,7 +92,9 @@ let getPracticeList = function (num: number) {
 };
 
 // 获取训练列表kk
-let practiceList: Ref<PracticeElement[]> = ref(getPracticeList(practiceTime.value));
+let practiceList: Ref<PracticeElement[]> = ref(
+  getPracticeList(practiceTime.value),
+);
 let index = ref(0);
 let currentKey: Ref<PracticeElement | undefined> = ref();
 let inputValue = ref('');
@@ -76,7 +106,14 @@ let seeIt = () => {
   setTimeout(() => {
     hiddenMean.value = currentHiddenOption;
   }, 3000);
-}
+};
+
+let toWordIndex = (targetIndex) => {
+  index.value = targetIndex;
+  currentKey.value = practiceList.value[targetIndex];
+  inputValue.value = '';
+};
+
 let nextWord = () => {
   inputValue.value = '';
   index.value++;
@@ -110,7 +147,7 @@ let onFocus = () => {
 
 let onPracticeTimeChange = () => {
   reset();
-}
+};
 
 let onBlur = () => {
   // currentKey.value = undefined;
@@ -118,6 +155,10 @@ let onBlur = () => {
 
 let volOptChange = () => {
   reset();
+};
+
+let wordChange = () => {
+ toWordIndex(currentWordIndex.value);
 };
 
 // 获取当前的值
