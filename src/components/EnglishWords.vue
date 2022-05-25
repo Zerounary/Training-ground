@@ -110,18 +110,6 @@ let volOptChange = () => {
   reset();
 };
 
-let highlightClass = function (key: string) {
-  if (currentKey.value == undefined) {
-    return '';
-  }
-  let checkKey = currentKey.value?.keys[inputValue.value.length];
-  if (checkKey == key) {
-    return 'bg-yellow-300';
-  } else {
-    return 'filter grayscale';
-  }
-};
-
 // 获取当前的值
 let currentKeyDisplay = computed(() => {
   return currentKey.value?.display;

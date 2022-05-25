@@ -44,10 +44,6 @@ export let toWordElement = (wordStr: string): WordElement => {
 
 export let allWords = words.split(',').map(toWordElement);
 
-// 展开数组
-function flatten(arr: Array<any>) {
-  return arr.reduce((acc, cur) => acc.concat(cur), []);
-}
 
 // shuffle a array
 function shuffle(arr: Array<any>) {
