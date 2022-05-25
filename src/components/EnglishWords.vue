@@ -21,7 +21,7 @@
         <span :class="`${hiddenMean ? 'invisible' : 'visible'}`">{{ currentKeyMean }}</span>
       </div>
       <div class="text-xl">单元训练</div>
-      <div class=" grid grid-cols-3 border p-3 rounded space-x-3">
+      <div class=" grid grid-cols-3 gap-3 border p-3 rounded space-x-3">
         <div>
           <select v-model="mode" @change="volOptChange">
             <option value="word">单词</option>
@@ -32,6 +32,9 @@
         </div>
         <div>
           <label for="hiddenMean">训练次数：<input v-model="practiceTime" @change="onPracticeTimeChange" /></label>
+        </div>
+        <div class=" col-span-3">
+          <button class="bg-blue-500 text-white h-50px w-full rounded" @click="start">开始</button>
         </div>
       </div>
     </div>
@@ -102,7 +105,7 @@ onMounted(() => {
 });
 
 let onFocus = () => {
-  start();
+  // start();
 };
 
 let onPracticeTimeChange = () => {
