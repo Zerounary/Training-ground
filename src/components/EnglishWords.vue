@@ -74,7 +74,7 @@ import { getRandomWords, PracticeElement } from '@/util/EnglishWords';
 
 // 所有字段的数据对象
 let mode: Ref<string> = ref('word');
-let currentWordIndex: Ref<Number> = ref(0);
+let currentWordIndex: Ref<number> = ref(0);
 let autoStart = ref(true);
 let hiddenMean = ref(true);
 let practiceTime = ref(1);
@@ -108,7 +108,7 @@ let seeIt = () => {
   }, 3000);
 };
 
-let toWordIndex = (targetIndex) => {
+let toWordIndex = (targetIndex: number) => {
   index.value = targetIndex;
   currentKey.value = practiceList.value[targetIndex];
   inputValue.value = '';
