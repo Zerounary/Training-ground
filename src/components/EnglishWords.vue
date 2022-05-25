@@ -30,6 +30,9 @@
         <div>
           <label for="hiddenMean">隐藏含义：<input id="hiddenMean" type="checkbox" v-model="hiddenMean" /></label>
         </div>
+        <div>
+          <label for="hiddenMean">训练次数：<input v-model="practiceTime" @change="onPracticeTimeChange" /></label>
+        </div>
       </div>
     </div>
   </div>
@@ -43,6 +46,7 @@ import { getRandomWords, PracticeElement } from '@/util/EnglishWords';
 let mode: Ref<string> = ref('word');
 let autoStart = ref(true);
 let hiddenMean = ref(true);
+let practiceTime = ref(1);
 
 let getPracticeList = function (num: number) {
   let keys: PracticeElement[] = [];
@@ -57,7 +61,7 @@ let getPracticeList = function (num: number) {
 };
 
 // 获取训练列表kk
-let practiceList: Ref<PracticeElement[]> = ref(getPracticeList(3));
+let practiceList: Ref<PracticeElement[]> = ref(getPracticeList(practiceTime.value));
 let index = ref(0);
 let currentKey: Ref<PracticeElement | undefined> = ref();
 let inputValue = ref('');
@@ -68,7 +72,7 @@ let nextWord = () => {
   index.value++;
   if (index.value == practiceList.value.length) {
     index.value = 0;
-    practiceList.value = getPracticeList(3);
+    practiceList.value = getPracticeList(practiceTime.value);
   }
   currentKey.value = practiceList.value[index.value];
 };
@@ -81,7 +85,7 @@ let keyup = (e: { key: string }) => {
 
 let reset = () => {
   index.value = 0;
-  practiceList.value = getPracticeList(3);
+  practiceList.value = getPracticeList(practiceTime.value);
   currentKey.value = undefined;
   input.value.focus();
 };
@@ -93,6 +97,10 @@ onMounted(() => {
 let onFocus = () => {
   start();
 };
+
+let onPracticeTimeChange = () => {
+  reset();
+}
 
 let onBlur = () => {
   // currentKey.value = undefined;
