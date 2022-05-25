@@ -1,9 +1,9 @@
 <template>
   <div class="space-y-30px mt-100px">
-    <span class="ml-50px ml-100px"></span>
+    <span class="ml-50px ml-100px visible invisible"></span>
     <h1 class="text-5xl w-300px mx-auto">英语单词复习</h1>
     <div class="space-y-3">
-      <div class="w-300px h-100px text-center text-6xl m-auto">
+      <div class="w-600px h-100px text-center text-6xl m-auto">
         {{ currentKeyDisplay }}
       </div>
       <div class="flex">
@@ -17,8 +17,8 @@
           :placeholder="''"
         />
       </div>
-      <div v-show="!hiddenMean" class="w-300px h-100px text-center text-6xl text-gray-400 m-auto">
-        {{ currentKeyMean }}
+      <div class="w-500px h-100px flex items-center justify-center bg-gray-50 text-center text-6xl text-gray-400 m-auto" @click="seeIt" >
+        <span :class="`${hiddenMean ? 'invisible' : 'visible'}`">{{ currentKeyMean }}</span>
       </div>
       <div class="text-xl">单元训练</div>
       <div class=" grid grid-cols-3 border p-3 rounded space-x-3">
@@ -67,6 +67,13 @@ let currentKey: Ref<PracticeElement | undefined> = ref();
 let inputValue = ref('');
 let input = ref();
 
+let seeIt = () => {
+  let currentHiddenOption = hiddenMean.value;
+  hiddenMean.value = !currentHiddenOption;
+  setTimeout(() => {
+    hiddenMean.value = currentHiddenOption;
+  }, 3000);
+}
 let nextWord = () => {
   inputValue.value = '';
   index.value++;
