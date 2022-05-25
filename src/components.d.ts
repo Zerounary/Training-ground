@@ -4,6 +4,7 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
+    EnglishWords: typeof import('./components/EnglishWords.vue')['default']
     XiaoHeKeyboard: typeof import('./components/XiaoHeKeyboard.vue')['default']
   }
 }

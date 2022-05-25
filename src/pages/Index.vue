@@ -1,6 +1,7 @@
 <template>
   <div>
-    <XiaoHeKeyboard />
+    <!-- <XiaoHeKeyboard /> -->
+    <EnglishWords />
   </div>
 </template>
 
